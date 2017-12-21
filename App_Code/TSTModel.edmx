@@ -1,0 +1,351 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="2.0" xmlns:edmx="http://schemas.microsoft.com/ado/2008/10/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TSTModel.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/02/edm/ssdl">
+        <EntityContainer Name="TSTModelStoreContainer">
+          <EntitySet Name="3TDepartments" EntityType="TSTModel.Store.3TDepartments" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="3TEmployees" EntityType="TSTModel.Store.3TEmployees" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="3TRequests" EntityType="TSTModel.Store.3TRequests" store:Type="Tables" Schema="dbo" />
+          <EntitySet Name="3TRequestStatuses" EntityType="TSTModel.Store.3TRequestStatuses" store:Type="Tables" Schema="dbo" />
+          <AssociationSet Name="FK_3TEmployees_3TDepartments" Association="TSTModel.Store.FK_3TEmployees_3TDepartments">
+            <End Role="3TDepartments" EntitySet="3TDepartments" />
+            <End Role="3TEmployees" EntitySet="3TEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_3TRequests_3TEmployees" Association="TSTModel.Store.FK_3TRequests_3TEmployees">
+            <End Role="3TEmployees" EntitySet="3TEmployees" />
+            <End Role="3TRequests" EntitySet="3TRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_3TRequests_3TEmployees1" Association="TSTModel.Store.FK_3TRequests_3TEmployees1">
+            <End Role="3TEmployees" EntitySet="3TEmployees" />
+            <End Role="3TRequests" EntitySet="3TRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_3TRequests_3TRequestStatuses" Association="TSTModel.Store.FK_3TRequests_3TRequestStatuses">
+            <End Role="3TRequestStatuses" EntitySet="3TRequestStatuses" />
+            <End Role="3TRequests" EntitySet="3TRequests" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="3TDepartments">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="DepartmentDescription" Type="nvarchar" MaxLength="500" />
+        </EntityType>
+        <EntityType Name="3TEmployees">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EmpTitle" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="EmpFirstName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="EmpLastName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="EmpPhotoUrl" Type="nvarchar" MaxLength="150" />
+          <Property Name="EmpPhone" Type="nvarchar" MaxLength="15" />
+          <Property Name="EmpEmail" Type="nvarchar" MaxLength="150" />
+          <Property Name="EmpHireDate" Type="smalldatetime" />
+          <Property Name="EmpNotes" Type="nvarchar" MaxLength="1500" />
+          <Property Name="EmpIsActive" Type="bit" Nullable="false" />
+          <Property Name="EmpDeptId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="3TRequests">
+          <Key>
+            <PropertyRef Name="ReqId" />
+          </Key>
+          <Property Name="ReqId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="ReqDate" Type="smalldatetime" Nullable="false" />
+          <Property Name="ReqCloseDate" Type="smalldatetime" />
+          <Property Name="ReqTechNotes" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="ReqScreenCapture" Type="nvarchar" MaxLength="150" />
+          <Property Name="ReqStatusId" Type="int" Nullable="false" />
+          <Property Name="ReqEmployeeId" Type="int" Nullable="false" />
+          <Property Name="ReqTechId" Type="int" />
+        </EntityType>
+        <EntityType Name="3TRequestStatuses">
+          <Key>
+            <PropertyRef Name="RequestStatusId" />
+          </Key>
+          <Property Name="RequestStatusId" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="RequestStatusName" Type="nvarchar" Nullable="false" MaxLength="50" />
+          <Property Name="RequestStatusDescription" Type="nvarchar" MaxLength="2000" />
+        </EntityType>
+        <Association Name="FK_3TEmployees_3TDepartments">
+          <End Role="3TDepartments" Type="TSTModel.Store.3TDepartments" Multiplicity="1" />
+          <End Role="3TEmployees" Type="TSTModel.Store.3TEmployees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="3TDepartments">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="3TEmployees">
+              <PropertyRef Name="EmpDeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_3TRequests_3TEmployees">
+          <End Role="3TEmployees" Type="TSTModel.Store.3TEmployees" Multiplicity="1" />
+          <End Role="3TRequests" Type="TSTModel.Store.3TRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="3TEmployees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="3TRequests">
+              <PropertyRef Name="ReqEmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_3TRequests_3TEmployees1">
+          <End Role="3TEmployees" Type="TSTModel.Store.3TEmployees" Multiplicity="0..1" />
+          <End Role="3TRequests" Type="TSTModel.Store.3TRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="3TEmployees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="3TRequests">
+              <PropertyRef Name="ReqTechId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_3TRequests_3TRequestStatuses">
+          <End Role="3TRequestStatuses" Type="TSTModel.Store.3TRequestStatuses" Multiplicity="1" />
+          <End Role="3TRequests" Type="TSTModel.Store.3TRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="3TRequestStatuses">
+              <PropertyRef Name="RequestStatusId" />
+            </Principal>
+            <Dependent Role="3TRequests">
+              <PropertyRef Name="ReqStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TSTModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+        <EntityContainer Name="TSTEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="C3TDepartments" EntityType="TSTModel.C3TDepartments" />
+          <EntitySet Name="C3TEmployees" EntityType="TSTModel.C3TEmployees" />
+          <EntitySet Name="C3TRequests" EntityType="TSTModel.C3TRequests" />
+          <EntitySet Name="C3TRequestStatuses" EntityType="TSTModel.C3TRequestStatuses" />
+          <AssociationSet Name="FK_3TEmployees_3TDepartments" Association="TSTModel.FK_3TEmployees_3TDepartments">
+            <End Role="C3TDepartments" EntitySet="C3TDepartments" />
+            <End Role="C3TEmployees" EntitySet="C3TEmployees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_3TRequests_3TEmployees" Association="TSTModel.FK_3TRequests_3TEmployees">
+            <End Role="C3TEmployees" EntitySet="C3TEmployees" />
+            <End Role="C3TRequests" EntitySet="C3TRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_3TRequests_3TEmployees1" Association="TSTModel.FK_3TRequests_3TEmployees1">
+            <End Role="C3TEmployees" EntitySet="C3TEmployees" />
+            <End Role="C3TRequests" EntitySet="C3TRequests" />
+          </AssociationSet>
+          <AssociationSet Name="FK_3TRequests_3TRequestStatuses" Association="TSTModel.FK_3TRequests_3TRequestStatuses">
+            <End Role="C3TRequestStatuses" EntitySet="C3TRequestStatuses" />
+            <End Role="C3TRequests" EntitySet="C3TRequests" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="C3TDepartments">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DepartmentName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="DepartmentDescription" Type="String" MaxLength="500" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="C3TEmployees" Relationship="TSTModel.FK_3TEmployees_3TDepartments" FromRole="C3TDepartments" ToRole="C3TEmployees" />
+        </EntityType>
+        <EntityType Name="C3TEmployees">
+          <Key>
+            <PropertyRef Name="EmployeeId" />
+          </Key>
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmpTitle" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="EmpFirstName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="EmpLastName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="EmpPhotoUrl" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="EmpPhone" Type="String" MaxLength="15" Unicode="true" FixedLength="false" />
+          <Property Name="EmpEmail" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="EmpHireDate" Type="DateTime" />
+          <Property Name="EmpNotes" Type="String" MaxLength="1500" Unicode="true" FixedLength="false" />
+          <Property Name="EmpIsActive" Type="Boolean" Nullable="false" />
+          <Property Name="EmpDeptId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="C3TDepartments" Relationship="TSTModel.FK_3TEmployees_3TDepartments" FromRole="C3TEmployees" ToRole="C3TDepartments" />
+          <NavigationProperty Name="C3TRequests" Relationship="TSTModel.FK_3TRequests_3TEmployees" FromRole="C3TEmployees" ToRole="C3TRequests" />
+          <NavigationProperty Name="C3TRequests1" Relationship="TSTModel.FK_3TRequests_3TEmployees1" FromRole="C3TEmployees" ToRole="C3TRequests" />
+        </EntityType>
+        <EntityType Name="C3TRequests">
+          <Key>
+            <PropertyRef Name="ReqId" />
+          </Key>
+          <Property Name="ReqId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReqDate" Type="DateTime" Nullable="false" />
+          <Property Name="ReqCloseDate" Type="DateTime" />
+          <Property Name="ReqTechNotes" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="ReqScreenCapture" Type="String" MaxLength="150" Unicode="true" FixedLength="false" />
+          <Property Name="ReqStatusId" Type="Int32" Nullable="false" />
+          <Property Name="ReqEmployeeId" Type="Int32" Nullable="false" />
+          <Property Name="ReqTechId" Type="Int32" />
+          <NavigationProperty Name="C3TEmployees" Relationship="TSTModel.FK_3TRequests_3TEmployees" FromRole="C3TRequests" ToRole="C3TEmployees" />
+          <NavigationProperty Name="C3TEmployees1" Relationship="TSTModel.FK_3TRequests_3TEmployees1" FromRole="C3TRequests" ToRole="C3TEmployees" />
+          <NavigationProperty Name="C3TRequestStatuses" Relationship="TSTModel.FK_3TRequests_3TRequestStatuses" FromRole="C3TRequests" ToRole="C3TRequestStatuses" />
+        </EntityType>
+        <EntityType Name="C3TRequestStatuses">
+          <Key>
+            <PropertyRef Name="RequestStatusId" />
+          </Key>
+          <Property Name="RequestStatusId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RequestStatusName" Type="String" Nullable="false" MaxLength="50" Unicode="true" FixedLength="false" />
+          <Property Name="RequestStatusDescription" Type="String" MaxLength="2000" Unicode="true" FixedLength="false" />
+          <NavigationProperty Name="C3TRequests" Relationship="TSTModel.FK_3TRequests_3TRequestStatuses" FromRole="C3TRequestStatuses" ToRole="C3TRequests" />
+        </EntityType>
+        <Association Name="FK_3TEmployees_3TDepartments">
+          <End Role="C3TDepartments" Type="TSTModel.C3TDepartments" Multiplicity="1" />
+          <End Role="C3TEmployees" Type="TSTModel.C3TEmployees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C3TDepartments">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="C3TEmployees">
+              <PropertyRef Name="EmpDeptId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_3TRequests_3TEmployees">
+          <End Role="C3TEmployees" Type="TSTModel.C3TEmployees" Multiplicity="1" />
+          <End Role="C3TRequests" Type="TSTModel.C3TRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C3TEmployees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="C3TRequests">
+              <PropertyRef Name="ReqEmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_3TRequests_3TEmployees1">
+          <End Role="C3TEmployees" Type="TSTModel.C3TEmployees" Multiplicity="0..1" />
+          <End Role="C3TRequests" Type="TSTModel.C3TRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C3TEmployees">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="C3TRequests">
+              <PropertyRef Name="ReqTechId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_3TRequests_3TRequestStatuses">
+          <End Role="C3TRequestStatuses" Type="TSTModel.C3TRequestStatuses" Multiplicity="1" />
+          <End Role="C3TRequests" Type="TSTModel.C3TRequests" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="C3TRequestStatuses">
+              <PropertyRef Name="RequestStatusId" />
+            </Principal>
+            <Dependent Role="C3TRequests">
+              <PropertyRef Name="ReqStatusId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2008/09/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TSTModelStoreContainer" CdmEntityContainer="TSTEntities">
+          <EntitySetMapping Name="C3TDepartments">
+            <EntityTypeMapping TypeName="TSTModel.C3TDepartments">
+              <MappingFragment StoreEntitySet="3TDepartments">
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
+                <ScalarProperty Name="DepartmentName" ColumnName="DepartmentName" />
+                <ScalarProperty Name="DepartmentDescription" ColumnName="DepartmentDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C3TEmployees">
+            <EntityTypeMapping TypeName="TSTModel.C3TEmployees">
+              <MappingFragment StoreEntitySet="3TEmployees">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+                <ScalarProperty Name="EmpTitle" ColumnName="EmpTitle" />
+                <ScalarProperty Name="EmpFirstName" ColumnName="EmpFirstName" />
+                <ScalarProperty Name="EmpLastName" ColumnName="EmpLastName" />
+                <ScalarProperty Name="EmpPhotoUrl" ColumnName="EmpPhotoUrl" />
+                <ScalarProperty Name="EmpPhone" ColumnName="EmpPhone" />
+                <ScalarProperty Name="EmpEmail" ColumnName="EmpEmail" />
+                <ScalarProperty Name="EmpHireDate" ColumnName="EmpHireDate" />
+                <ScalarProperty Name="EmpNotes" ColumnName="EmpNotes" />
+                <ScalarProperty Name="EmpIsActive" ColumnName="EmpIsActive" />
+                <ScalarProperty Name="EmpDeptId" ColumnName="EmpDeptId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C3TRequests">
+            <EntityTypeMapping TypeName="TSTModel.C3TRequests">
+              <MappingFragment StoreEntitySet="3TRequests">
+                <ScalarProperty Name="ReqId" ColumnName="ReqId" />
+                <ScalarProperty Name="ReqDate" ColumnName="ReqDate" />
+                <ScalarProperty Name="ReqCloseDate" ColumnName="ReqCloseDate" />
+                <ScalarProperty Name="ReqTechNotes" ColumnName="ReqTechNotes" />
+                <ScalarProperty Name="ReqScreenCapture" ColumnName="ReqScreenCapture" />
+                <ScalarProperty Name="ReqStatusId" ColumnName="ReqStatusId" />
+                <ScalarProperty Name="ReqEmployeeId" ColumnName="ReqEmployeeId" />
+                <ScalarProperty Name="ReqTechId" ColumnName="ReqTechId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="C3TRequestStatuses">
+            <EntityTypeMapping TypeName="TSTModel.C3TRequestStatuses">
+              <MappingFragment StoreEntitySet="3TRequestStatuses">
+                <ScalarProperty Name="RequestStatusId" ColumnName="RequestStatusId" />
+                <ScalarProperty Name="RequestStatusName" ColumnName="RequestStatusName" />
+                <ScalarProperty Name="RequestStatusDescription" ColumnName="RequestStatusDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2008/10/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams>
+      <Diagram Name="TSTModel">
+        <EntityTypeShape EntityType="TSTModel.C3TDepartments" Width="1.5" PointX="0.75" PointY="2" Height="1.7879850260416672" IsExpanded="true" />
+        <EntityTypeShape EntityType="TSTModel.C3TEmployees" Width="1.5" PointX="3" PointY="1" Height="3.7109993489583331" IsExpanded="true" />
+        <EntityTypeShape EntityType="TSTModel.C3TRequests" Width="1.5" PointX="5.25" PointY="1.25" Height="3.1340950520833335" IsExpanded="true" />
+        <EntityTypeShape EntityType="TSTModel.C3TRequestStatuses" Width="1.5" PointX="3" PointY="6" Height="1.7879850260416657" IsExpanded="true" />
+        <AssociationConnector Association="TSTModel.FK_3TEmployees_3TDepartments" ManuallyRouted="false">
+          <ConnectorPoint PointX="2.25" PointY="2.8939925130208337" />
+          <ConnectorPoint PointX="3" PointY="2.8939925130208337" />
+        </AssociationConnector>
+        <AssociationConnector Association="TSTModel.FK_3TRequests_3TEmployees" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="2.8170475260416667" />
+          <ConnectorPoint PointX="5.25" PointY="2.8170475260416667" />
+        </AssociationConnector>
+        <AssociationConnector Association="TSTModel.FK_3TRequests_3TEmployees1" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="1.9710237630208334" />
+          <ConnectorPoint PointX="5.25" PointY="1.9710237630208334" />
+        </AssociationConnector>
+        <AssociationConnector Association="TSTModel.FK_3TRequests_3TRequestStatuses" ManuallyRouted="false">
+          <ConnectorPoint PointX="4.5" PointY="6.8939925130208328" />
+          <ConnectorPoint PointX="6" PointY="6.8939925130208328" />
+          <ConnectorPoint PointX="6" PointY="4.3840950520833335" />
+        </AssociationConnector>
+      </Diagram>
+    </Diagrams>
+  </Designer>
+</edmx:Edmx>

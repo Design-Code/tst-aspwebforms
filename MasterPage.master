@@ -1,0 +1,114 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="MasterPage.master.cs" Inherits="MasterPage" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="asp" %>
+
+<!DOCTYPE html>
+<!--
+	Incorp4T by 4Templates | http://www.4templates.com/free/ | @4templates
+	Licensed under the Creative Commons Attribution 3.0 License
+-->
+<html lang="en">
+
+<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Incorp4T by 4Templates</title>
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+<link href="http://fonts.googleapis.com/css?family=Arvo:400,700" rel="stylesheet" type="text/css" />
+<link href="default.css" rel="stylesheet" type="text/css" media="all" />
+    <asp:ContentPlaceHolder ID="cphHead" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+<form runat="server">
+<div id="wrapper-gradiant">
+	<div id="wrapper-bgshadow">
+		<div id="wrapper">
+            <asp:ToolkitScriptManager ID="ToolkitScriptManager1" runat="server">
+            </asp:ToolkitScriptManager>
+			<div id="header">
+				<div id="logo">
+					<h1><a href="#">T.S.T.</a></h1>
+					<p>Ticket&nbsp;&nbsp; Support&nbsp;&nbsp; Tracker</p>
+				</div>
+			</div>
+			<div id="menu-wrapper">
+				<div id="menu">
+					<ul>
+						<li><a id="A1" href="~/Default.aspx" runat="server" accesskey="1" title="">Home</a></li>
+						<li><a id="A2" href="~/Requests.aspx" runat="server" accesskey="2" title="">Ticket Requests</a></li>
+                        <%if (Page.User.IsInRole("tech"))
+                          {%>
+                        <li><a id="A4" href="~/secure/admin/ManageEmployees.aspx" runat="server" accesskey="4" title="">Manage&nbsp; Employees</a></li>
+                        <li><a id="A3" href="~/secure/admin/ManageDepts.aspx" runat="server" accesskey="3" title="">Manage&nbsp; Departments</a></li>
+						
+                        <%} %>
+						
+					</ul>
+				</div>
+			</div>
+			<div id="banner">
+				<div class="image"><a href="#"><img src="~/images/pics01.jpg" runat="server" width="1000" height="262" alt="" /></a></div>
+				<div class="caption1">
+					<h2>Resolving your I.T. problems</h2>
+					<p>One Ticket at a time...</p>
+				</div>
+			</div>
+            
+			<div id="page">
+				<div class="bgtop"></div>
+				<div class="bgcontent">
+                    <asp:ContentPlaceHolder ID="cphMain" runat="server">
+                    
+                    
+					
+
+                    </asp:ContentPlaceHolder>
+				</div>
+				<div class="bgbtm"></div>
+			</div>
+			<div id="sidebar">
+				<div>
+					
+     <!-- LOGIN --->
+
+                    <h2 class="title">TECHNICIAN LOG IN</h2>
+                    <asp:LoginView ID="LoginView1" runat="server">
+                    <AnonymousTemplate>
+                    <asp:Login ID="Login1" runat="server" BorderPadding="18" Font-Names="Arial" 
+                            ForeColor="#99CC00"></asp:Login>
+                    </AnonymousTemplate>
+                    <LoggedInTemplate>
+                     <div ><p style="color:#99CC00;"> Welcome,</p></div>   
+                        <asp:LoginName ID="LoginName1" runat="server" Font-Size="Medium" ForeColor="#99CC00" />
+                        <asp:LoginStatus ID="LoginStatus2" runat="server" CssClass="logout" />
+                    </LoggedInTemplate>
+
+                    </asp:LoginView>
+                    
+
+                    
+				</div>
+				<!--<div>
+					<h2 class="title">Recent Post</h2>
+					<ul>
+						<li class="first"><a href="#">Hendrerit orci sed pharetra elit</a></li>
+						<li><a href="#">Donec in eros odio varius tempus</a></li>
+						<li><a href="#">Vestibulum quis quam et velit</a></li>
+						<li><a href="#">Rutrum ornare nec sed curabitur</a></li>
+						<li><a href="#">Malesuada ullamcorper nunc</a></li>
+					</ul>
+				</div>-->
+			</div>
+		</div>
+	</div>
+	<div id="footer">
+		<p>DESIGN/CODE©  JOSH SEICHEPINE 2013
+        &nbsp;&nbsp;|&nbsp;&nbsp; </p>
+	</div>
+</div>
+</form>
+
+</body>
+
+</html>
